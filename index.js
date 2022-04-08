@@ -18,11 +18,7 @@ const fruits=[
     {name:'cherries',id:7}
 ]
 
-//route here inside the API client
-//   app.get('/',(req,res)=>{
-//       res.send('https://seabreeze.conteir.no/MAIN%2FSNOMEDCT-NO-DAILYBUILD/descriptions?conceptId=233604007&offset=0&limit=50');
 
-//   });
 //get method request to request data from a source
 //req is an obj containing info about the http request that raised the event.
 //res is an obj represents the http responses that an express app sends when it gets http requests. 
@@ -40,18 +36,21 @@ const fruits=[
   //reqst handler is a func that handle the client rqst and construct response
   //here we are using it to add new item to the array
  app.post('/api/fruits',(req,res)=>{
- const {error}=validateFruit(req.body);
-  if (error){
-  res.status(400).send(error.details[0].message)
-     return;
-           }
+ const {error}=validateFruit(req.body);//first validate the data that is going to enter in the array.
 
-const fruit = {
-id:fruits.length + 1,
-name: req.body.name
+  if (error){//if we have any error during validation of data 400error and send this message to error.
+  res.status(400).send(error.details[0].message)// all this error messages displayed in the array details[]because when you have items in array to access the indiviual items you use index and we want to display in details.
+
+     return;//error display that return that to user.
+           }
+           //new item adds here
+
+const fruit = {//set fruit variable to object
+id:fruits.length + 1,//id for new item,ref to frits array and attaching length property so this length method here is going to include that new item and return the full length of the array including new array.
+name: req.body.name//name of new fruit will be attach to body of rqst.
 };
-fruits.push(fruit);
-res.send(fruit);
+fruits.push(fruit);//push method adds new item to the end of an array and returns the new length.
+res.send(fruit);//res obj will now return that new fruit to be displayed using the send obj.
 
       
  });
