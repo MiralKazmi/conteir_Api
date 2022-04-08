@@ -37,6 +37,8 @@ const fruits=[
 
   });
   //create request handler
+  //reqst handler is a func that handle the client rqst and construct response
+  //here we are using it to add new item to the array
  app.post('/api/fruits',(req,res)=>{
  const {error}=validateFruit(req.body);
   if (error){
@@ -55,12 +57,12 @@ res.send(fruit);
  });
  
 
- function validateFruit(fruit){
+ function validateFruit(fruit){//joi uses schema to define validation rules for data
      
      
 
      const schema = Joi.object({name: Joi.string() .min(3) .required() });//string name of fruit with min 3 character
-     const validation = schema.validate(fruit);
+     const validation = schema.validate(fruit);//
      return validation;
  }
 //  function validateFruit(fruit){
